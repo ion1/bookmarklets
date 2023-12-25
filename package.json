@@ -1,0 +1,24 @@
+{
+  "name": "@ion1/bookmarklets",
+  "description": "Bookmarklets: Capture Video Frame",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "check": "tsc --noEmit"
+  },
+  "author": "Johan Kiviniemi",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@8.10.5",
+  "devDependencies": {
+    "@tsconfig/strictest": "^2.0.2",
+    "@types/node": "^20.10.5",
+    "@types/uglify-js": "^3.17.4",
+    "eta": "^3.2.0",
+    "terser": "^5.26.0",
+    "typescript": "^5.3.3",
+    "uglify-js": "^3.17.4",
+    "vite": "^5.0.10"
+  }
+}
