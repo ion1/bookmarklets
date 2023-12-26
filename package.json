@@ -1,6 +1,6 @@
 {
   "name": "@ion1/bookmarklets",
-  "description": "Bookmarklets: Capture Video Frame",
+  "description": "Ion's Bookmarklets: Capture Video Frame opens the currently visible video frame as an image in a new tab.",
   "version": "0.0.1",
   "private": true,
   "scripts": {
