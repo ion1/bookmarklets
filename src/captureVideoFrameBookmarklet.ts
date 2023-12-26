@@ -13,7 +13,7 @@ export {};
         URL.revokeObjectURL(url);
       }
     } catch (e) {
-      alert(`Capture Video Frame: ${e}`);
+      alert(`Capture Video Frame\n${e}`);
     }
   }
 
