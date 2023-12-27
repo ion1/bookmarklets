@@ -3,10 +3,10 @@ export {};
 (() => {
   async function main(): Promise<void> {
     try {
-      const video = getVideo();
-      const canvas = videoToCanvas(video);
-      const blob = await canvasToBlob(canvas);
-      const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(
+        await canvasToBlob(videoToCanvas(getVideo()))
+      );
+
       try {
         await openWindowAndWait(url);
       } finally {
