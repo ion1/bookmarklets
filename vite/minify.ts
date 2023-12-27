@@ -1,13 +1,7 @@
 import { type Plugin } from "vite";
-import { type MinifyOptions, minify } from "terser";
-import UglifyJS from "uglify-js";
+import esbuild from "esbuild";
 
-export type Options = {
-  terser?: MinifyOptions;
-  uglifyJS?: UglifyJS.MinifyOptions;
-};
-
-export function minifyPlugin(opts: Options = {}): Plugin {
+export function minifyPlugin(): Plugin {
   return {
     name: "minify",
 
@@ -17,34 +11,20 @@ export function minifyPlugin(opts: Options = {}): Plugin {
           continue;
         }
 
-        const minifiedTerser = await minify(chunk.code, opts.terser);
-        if (!minifiedTerser.code) {
-          throw new Error(`Terser failed`);
-        }
-
-        const minifiedUglifyJS = UglifyJS.minify(chunk.code, opts.uglifyJS);
-        if (minifiedUglifyJS.error) {
-          throw new Error(`UglifyJS failed: ${minifiedUglifyJS.error}`);
-        }
-
-        const minifiedBoth = await minify(minifiedUglifyJS.code, opts.terser);
-        if (!minifiedBoth.code) {
-          throw new Error(`UglifyJS->Terser failed`);
-        }
-
-        const minified = [
-          minifiedTerser.code,
-          minifiedUglifyJS.code,
-          minifiedBoth.code,
-        ].reduce((shortest, code) =>
-          code.length < shortest.length ? code : shortest
-        );
+        const minified = await esbuild.transform(chunk.code, {
+          platform: "browser",
+          format: "iife",
+          target: "es2022",
+          minify: true,
+          treeShaking: true,
+          sourcemap: false,
+        });
 
         this.emitFile({
           type: "asset",
           name: `${chunk.name}.min`,
           fileName: `${fileName}.min.js`,
-          source: minified,
+          source: minified.code,
         });
       }
     },
